@@ -1,6 +1,6 @@
 # login_app
 
-A new Flutter project.
+Feito por Eduardo Bizzi Martins e Júlia Letícia Hille.
 
 ## Getting Started
 
