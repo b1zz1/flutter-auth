@@ -1,25 +1,48 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/components/my_actionicon.dart';
 import 'package:flutter_auth/components/my_button.dart';
 import 'package:flutter_auth/components/my_textfield.dart';
 
-class MySignInPage extends StatefulWidget {
-  const MySignInPage({super.key});
+class Login extends StatefulWidget {
+  const Login({super.key});
 
   @override
-  State<MySignInPage> createState() => _MySignInPageState();
+  State<Login> createState() => _MySignInPageState();
 }
 
-class _MySignInPageState extends State<MySignInPage> {
+class _MySignInPageState extends State<Login> {
   // Sign in input values
-  final usernameController = TextEditingController();
+  final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  // Signs the user in
-  void signUserIn() {
+  // Signs the user in with email and password
+  void emailSignIn() async {
+    // Displays a loading overlay
+    showDialog(
+      context: context,
+      builder: (context) =>
+          const Center(child: CircularProgressIndicator(color: Colors.black)),
+    );
+
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailController.text, password: passwordController.text);
+    } on FirebaseAuthException catch (error) {
+      if (error.code == 'user-not-found' || error.code == 'wrong-password') {
+        kDebugMode ? print('Incorrect email or password.') : null;
+      }
+    }
+
+    // Closes the loading overlay
+    Navigator.pop(context);
+  }
+
+  // Signs the user in with Google
+  void googleSignIn() async {
     if (kDebugMode) {
-      print('Username: ${usernameController.text}');
+      print('Username: ${emailController.text}');
     }
     if (kDebugMode) {
       print('Password: ${passwordController.text}');
@@ -50,8 +73,8 @@ class _MySignInPageState extends State<MySignInPage> {
                     ),
                     const SizedBox(height: 12), // Empty space
                     MyTextField(
-                        controller: usernameController,
-                        label: 'Username',
+                        controller: emailController,
+                        label: 'Email',
                         obscure: false),
                     const SizedBox(height: 16), // Empty space
                     MyTextField(
@@ -70,7 +93,7 @@ class _MySignInPageState extends State<MySignInPage> {
                       ],
                     ),
                     const SizedBox(height: 24), // Empty space
-                    MyButton(text: 'Sign-In', onPressed: signUserIn),
+                    MyButton(text: 'Sign In', onPressed: emailSignIn),
                     const SizedBox(height: 24), // Empty space
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
