@@ -21,14 +21,14 @@ class MyTextField extends StatelessWidget {
         labelText: label,
         labelStyle: TextStyle(color: Colors.grey[500]),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12), // Set the border radius here
+          borderRadius: BorderRadius.circular(8), // Set the border radius here
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: Colors.white),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: Colors.grey.shade400),
         ),
         fillColor: Colors.grey.shade200,
