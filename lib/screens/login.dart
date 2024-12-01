@@ -5,6 +5,8 @@ import 'package:flutter_auth/components/my_actionicon.dart';
 import 'package:flutter_auth/components/my_button.dart';
 import 'package:flutter_auth/components/my_textfield.dart';
 
+import '../services/auth.dart';
+
 class Login extends StatefulWidget {
   const Login({super.key});
 
@@ -93,7 +95,11 @@ class _MySignInPageState extends State<Login> {
                       ],
                     ),
                     const SizedBox(height: 24), // Empty space
-                    MyButton(text: 'Sign In', onPressed: emailSignIn),
+                    MyButton(
+                      text: 'Sign In',
+                      onPressed: () => AuthService().signInWithEmail(
+                          emailController.text, passwordController.text),
+                    ),
                     const SizedBox(height: 24), // Empty space
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -114,15 +120,19 @@ class _MySignInPageState extends State<Login> {
                                 Divider(color: Colors.grey[400], thickness: 2)),
                       ],
                     ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 24.0),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 24.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          MyActionIcon(imagePath: 'assets/images/Google.png'),
+                          MyActionIcon(
+                              onTap: () => AuthService().signInWithGoogle(),
+                              imagePath: 'assets/images/Google.png'),
                           // Empty space
-                          SizedBox(width: 24),
-                          MyActionIcon(imagePath: 'assets/images/Apple.png'),
+                          const SizedBox(width: 24),
+                          MyActionIcon(
+                              onTap: () {},
+                              imagePath: 'assets/images/Apple.png'),
                         ],
                       ),
                     ),
