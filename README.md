@@ -1,6 +1,6 @@
-# login_app
+# Flutter Auth
 
-Feito por Eduardo Bizzi Martins e Júlia Letícia Hille.
+Made by Eduardo Bizzi Martins and Júlia Letícia Hille.
 
 ## Getting Started
 
