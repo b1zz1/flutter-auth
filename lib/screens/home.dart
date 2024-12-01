@@ -15,7 +15,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
+        title: Text('Home'),
         actions: [
           IconButton(onPressed: signOut, icon: const Icon(Icons.logout))
         ],
@@ -26,8 +26,8 @@ class Home extends StatelessWidget {
           child: Column(
             children: [
               const Icon(
-                Icons.check,
-                size: 98,
+                Icons.lock_open,
+                size: 100,
                 color: Colors.green,
               ),
               Column(
@@ -40,7 +40,7 @@ class Home extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                         color: Colors.green),
                   ),
-                  const SizedBox(height: 8.0),
+                  const SizedBox(height: 16.0),
                   Container(
                     padding: const EdgeInsets.all(8.0),
                     decoration: BoxDecoration(
