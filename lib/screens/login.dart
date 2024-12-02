@@ -49,132 +49,124 @@ class _MySignInPageState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.grey[300],
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    const SizedBox(height: 48),
-                    // Empty space
-                    const Icon(Icons.lock, size: 100, color: Colors.black),
-                    // Logo
-                    const SizedBox(height: 48),
-                    // Empty space
-                    Text(
-                      'Welcome back, please sign in',
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.grey[700]),
-                    ),
-                    const SizedBox(height: 12),
-                    // Empty space
-                    MyTextField(
-                        controller: emailController,
-                        label: 'Email',
-                        obscure: false),
-                    const SizedBox(height: 16),
-                    // Empty space
-                    MyTextField(
-                        controller: passwordController,
-                        label: 'Password',
-                        obscure: true),
-                    const SizedBox(height: 8),
-                    // Empty space
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text('Forgot password?',
-                            style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.grey[600])),
-                      ],
-                    ),
-                    const SizedBox(height: 24),
-                    // Empty space
-                    MyButton(
-                      text: 'Sign In',
-                      onPressed: () => handleSignIn(() async {
-                        return await AuthService().signInWithEmail(
-                          emailController.text,
-                          passwordController.text,
-                        );
-                      }),
-                    ),
-                    const SizedBox(height: 24),
-                    // Empty space
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Expanded(
-                            child:
-                                Divider(color: Colors.grey[400], thickness: 2)),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Text(
-                            "Or continue with",
-                            style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.grey[700]),
-                          ),
-                        ),
-                        Expanded(
-                          child: Divider(color: Colors.grey[400], thickness: 2),
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 24.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          MyActionIcon(
-                              onTap: () => handleSignIn(() async {
-                                    return await AuthService()
-                                        .signInWithGoogle();
-                                  }),
-                              imagePath: 'assets/images/Google.png'),
-                          const SizedBox(width: 24), // Empty space
-                          MyActionIcon(
-                              onTap: () => handleSignIn(() async {
-                                    return await AuthService()
-                                        .signInWithApple();
-                                  }),
-                              imagePath: 'assets/images/Apple.png'),
-                        ],
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Not a member?',
+      backgroundColor: Colors.grey[300],
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  const SizedBox(height: 48), // Empty space
+                  const Icon(Icons.lock, size: 100, color: Colors.black),
+                  // Logo
+                  const SizedBox(height: 48), // Empty space
+                  Text(
+                    'Welcome to Flutter Auth',
+                    style: TextStyle(fontSize: 24, color: Colors.grey[700]),
+                  ),
+                  const SizedBox(height: 24), // Empty space
+                  MyTextField(
+                      controller: emailController,
+                      label: 'Email',
+                      obscure: false),
+                  const SizedBox(height: 16),
+                  // Empty space
+                  MyTextField(
+                      controller: passwordController,
+                      label: 'Password',
+                      obscure: true),
+                  const SizedBox(height: 8), // Empty space
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text('Forgot password?',
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.grey[600])),
+                    ],
+                  ),
+                  const SizedBox(height: 24),
+                  // Empty space
+                  MyButton(
+                    text: 'Sign In',
+                    onPressed: () => handleSignIn(() async {
+                      return await AuthService().signInWithEmail(
+                        emailController.text,
+                        passwordController.text,
+                      );
+                    }),
+                  ),
+                  const SizedBox(height: 24),
+                  // Empty space
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                          child:
+                              Divider(color: Colors.grey[400], thickness: 2)),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Text(
+                          "Or continue with",
                           style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w500,
                               color: Colors.grey[700]),
                         ),
-                        const SizedBox(width: 4), // Empty space
-                        const Text(
-                          'Register now',
-                          style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blue),
-                        ),
+                      ),
+                      Expanded(
+                        child: Divider(color: Colors.grey[400], thickness: 2),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 24.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        MyActionIcon(
+                            onTap: () => handleSignIn(() async {
+                                  return await AuthService().signInWithGoogle();
+                                }),
+                            imagePath: 'assets/images/Google.png'),
+                        const SizedBox(width: 24), // Empty space
+                        MyActionIcon(
+                            onTap: () => handleSignIn(() async {
+                                  return await AuthService().signInWithApple();
+                                }),
+                            imagePath: 'assets/images/Apple.png'),
                       ],
                     ),
-                  ],
-                ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Not a member?',
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.grey[700]),
+                      ),
+                      const SizedBox(width: 4), // Empty space
+                      const Text(
+                        'Register now',
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
