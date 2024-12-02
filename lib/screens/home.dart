@@ -66,8 +66,9 @@ class Home extends StatelessWidget {
                     Text(
                       'Made by b1zz1 on Github',
                       style: TextStyle(
-                        color: Colors.grey[700],
                         fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey[700],
                       ),
                     ),
                   ],
