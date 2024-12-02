@@ -3,27 +3,90 @@ import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
-  // Sign in with email and password
-  signInWithEmail(email, password) async {
+  /// User sign in with email and password
+  signInWithEmail(String email, String password) async {
+    // Signs user in with provided email and password
     try {
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
-    } on FirebaseAuthException catch (error) {
-      if (error.code == 'user-not-found' || error.code == 'wrong-password') {
-        kDebugMode ? print('Incorrect email or password.') : null;
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      return null;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'invalid-credential') {
+        return 'Incorrect email or password.';
+      } else if (e.code == 'invalid-email') {
+        return 'Invalid email format.';
+      } else if (e.code == 'channel-error') {
+        return 'One or more fields are empty.';
+      } else {
+        return 'An unexpected error occurred.';
       }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error: $e');
+      }
+      return 'An error occurred. Please check your connection and try again.';
     }
   }
 
-  // Sign in with Google
+  /// User sign in with Google
   signInWithGoogle() async {
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    final GoogleSignInAuthentication googleAuth =
-        await googleUser!.authentication;
+    // Triggers the Google Sign In process
+    final GoogleSignInAccount? googleSignInAccount =
+        await GoogleSignIn().signIn();
+
+    // Stores auth tokens after sign in
+    final GoogleSignInAuthentication authentication =
+        await googleSignInAccount!.authentication;
+
+    // Creates a new credential for user
     final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
+      accessToken: authentication.accessToken,
+      idToken: authentication.idToken,
     );
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+
+    // Signs user in with credentials
+    try {
+      final UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+
+      return userCredential.user;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'account-exists-with-different-credential') {
+        // handle the error here
+      } else if (e.code == 'invalid-credential') {
+        // handle the error here
+      } else {
+        return 'An unexpected error occurred.';
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error: $e');
+      }
+      return 'An error occurred. Please check your connection and try again.';
+    }
+  }
+
+  /// User sign in with Apple
+  signInWithApple() {
+    return 'Apple login not yet implemented.';
+  }
+
+  /// Signs the user out
+  Future<void> signOut() async {
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+
+    try {
+      if (!kIsWeb) {
+        await googleSignIn.signOut();
+      }
+      await FirebaseAuth.instance.signOut();
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error: $e');
+      }
+    }
   }
 }
