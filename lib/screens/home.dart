@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../components/my_avatar.dart';
+import '../components/my_button.dart';
+import '../components/my_header.dart';
 import '../services/auth.dart';
 
 class Home extends StatelessWidget {
@@ -12,54 +14,66 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Home'),
-        actions: [
-          IconButton(
-              onPressed: () => AuthService().signOut(),
-              icon: const Icon(Icons.logout))
-        ],
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              const Icon(
-                Icons.lock_open,
-                size: 100,
-                color: Colors.green,
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Login successful!',
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.green),
+      backgroundColor: Colors.grey[300],
+      appBar: Header(screenWidth: MediaQuery.of(context).size.width),
+      body: SafeArea(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  MyAvatar(user: user?.photoURL), // User avatar
+                  const SizedBox(height: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Welcome,',
+                        style: TextStyle(
+                          fontSize: 24,
+                        ),
+                      ),
+                      const SizedBox(width: 6),
+                      Text(
+                        '${user?.displayName?.split(' ')[0]}',
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 16.0),
-                  MyAvatar(user: user?.photoURL),
-                  Container(
-                    padding: const EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Colors.black,
+                  const SizedBox(height: 4),
+                  Text(
+                    '${user?.email}',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.grey[700],
                     ),
-                    child: Text(
-                      '${user?.email}',
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                  ),
+                ]),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    MyButton(
+                      text: 'Sign Out',
+                      onPressed: () => AuthService().signOut(),
+                    ),
+                    const SizedBox(height: 48),
+                    Text(
+                      'Made by b1zz1 on Github',
+                      style: TextStyle(
+                        color: Colors.grey[700],
+                        fontSize: 12,
                       ),
                     ),
-                  ),
-                ],
-              )
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -18,15 +18,15 @@ class MyAvatar extends StatelessWidget {
                 ),
               ),
             )
-          : ClipOval(
+          : const ClipOval(
               child: Material(
-                color: Colors.black.withOpacity(0.3),
-                child: const Padding(
+                color: Colors.black,
+                child: Padding(
                   padding: EdgeInsets.all(16.0),
                   child: Icon(
                     Icons.person,
                     size: 60,
-                    color: Colors.black,
+                    color: Colors.white,
                   ),
                 ),
               ),

@@ -75,17 +75,16 @@ class AuthService {
   }
 
   /// Signs the user out
-  Future<void> signOut() async {
+  signOut() async {
     final GoogleSignIn googleSignIn = GoogleSignIn();
 
     try {
-      if (!kIsWeb) {
-        await googleSignIn.signOut();
-      }
+      await googleSignIn.signOut();
       await FirebaseAuth.instance.signOut();
     } catch (e) {
       if (kDebugMode) {
         print('Error: $e');
+        return 'Error signing out, please try again.';
       }
     }
   }

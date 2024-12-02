@@ -19,8 +19,8 @@ class _MySignInPageState extends State<Login> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  // Wraps function to provide loading overlay and error display
-  void handleSignIn(Function() action) async {
+  /// Wraps a function to provide loading overlay and error display
+  void handleSignIn(Future<dynamic> Function() action) async {
     // Displays a loading overlay
     showDialog(
       context: context,
@@ -29,18 +29,21 @@ class _MySignInPageState extends State<Login> {
           const Center(child: CircularProgressIndicator(color: Colors.black)),
     );
 
-    // Execute the passed function
+    // Executes the passed function
     final result = await action();
 
-    // Display appropriate message based on the result
-    if (result == null || result is User) {
-      showFlashMessage(context, 'success', 'Login success!');
-    } else {
-      showFlashMessage(context, 'error', result);
-    }
+    // Checks if the widget is still mounted
+    if (mounted) {
+      // Display appropriate message based on the result
+      if (result == null || result is User) {
+        showFlashMessage(context, 'success', 'Login successful!');
+      } else {
+        showFlashMessage(context, 'error', result);
+      }
 
-    // Close the loading overlay
-    Navigator.pop(context);
+      // Closes the loading overlay
+      Navigator.pop(context);
+    }
   }
 
   @override
@@ -59,7 +62,7 @@ class _MySignInPageState extends State<Login> {
                     // Empty space
                     const Icon(Icons.lock, size: 100, color: Colors.black),
                     // Logo
-                    const SizedBox(height: 50),
+                    const SizedBox(height: 48),
                     // Empty space
                     Text(
                       'Welcome back, please sign in',
